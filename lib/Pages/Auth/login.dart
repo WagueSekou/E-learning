@@ -1,5 +1,6 @@
 import 'package:elearning/Pages/Auth/reuseable/appBtn.dart';
 import 'package:elearning/Pages/Auth/reuseable/appTextfield.dart';
+import 'package:elearning/Pages/homePage.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -109,7 +110,16 @@ class _MyWidgetState extends State<LoginPage> {
               ),
 
               //button login
-              AppButton(onTap: () {}, text: 'Login'),
+              AppButton(
+                  onTap: () {
+                    print("Login button tapped!");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Homepage(),
+                        ));
+                  },
+                  text: 'Login'),
 
               SizedBox(
                 height: 15,
