@@ -46,7 +46,7 @@ class Homepage extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
             decoration: BoxDecoration(
-              color: Colors.purple,
+              color: Colors.purple[200],
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
@@ -245,7 +245,7 @@ class Homepage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
           showUnselectedLabels: true,
           iconSize: 32,
-          selectedItemColor: Colors.purple,
+          selectedItemColor: Colors.purple[200],
           selectedFontSize: 18,
           unselectedItemColor: Colors.grey,
           items: [

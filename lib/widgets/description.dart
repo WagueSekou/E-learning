@@ -25,7 +25,7 @@ class DescriptionSection extends StatelessWidget {
               // Spacer(),
               Icon(
                 Icons.timer,
-                color: Colors.purple,
+                color: Colors.purple[200],
               ),
               SizedBox(
                 width: 5,

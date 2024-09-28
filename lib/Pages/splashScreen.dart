@@ -1,4 +1,5 @@
 import 'package:elearning/Pages/Auth/login_or_register.dart';
+import 'package:elearning/Pages/homePage.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -99,7 +100,7 @@ class SplashScreen extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => PageToggeler(),
+                                    builder: (context) => Homepage(),
                                   ));
                             },
                             child: Container(

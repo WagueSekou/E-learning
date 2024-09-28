@@ -32,7 +32,7 @@ class _CourseScreenState extends State<CourseScreen> {
             child: Icon(
               Icons.notifications,
               size: 28,
-              color: Colors.purple,
+              color: Colors.purple[200],
             ),
           ),
         ],
@@ -61,7 +61,7 @@ class _CourseScreenState extends State<CourseScreen> {
                   ),
                   child: Icon(
                     Icons.play_arrow_rounded,
-                    color: Colors.purple,
+                    color: Colors.purple[200],
                     size: 45,
                   ),
                 ),
@@ -126,7 +126,7 @@ class _CourseScreenState extends State<CourseScreen> {
                       },
                       child: Container(
                         padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 35),
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                         child: Text(
                           "Videos",
                           style: TextStyle(
