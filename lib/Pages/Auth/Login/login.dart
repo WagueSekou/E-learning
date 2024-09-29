@@ -1,6 +1,6 @@
-import 'package:elearning/Pages/Auth/reuseable/appBtn.dart';
-import 'package:elearning/Pages/Auth/reuseable/appTextfield.dart';
-import 'package:elearning/Pages/homePage.dart';
+import 'package:elearning/Pages/Auth/Login/controller/loginController.dart';
+import 'package:elearning/Pages/reuseable/appBtn.dart';
+import 'package:elearning/Pages/reuseable/appTextfield.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,12 +8,30 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _MyWidgetState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MyWidgetState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> {
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
+  //
+  late LoginController loginController;
+  @override
+  void initState() {
+    super.initState();
+    //initialize the logincontroller with textEditingControllers
+    loginController = LoginController(
+        emailController: emailTextController,
+        passwordController: passwordTextController);
+  }
+
+  @override
+  void dispose() {
+    emailTextController.dispose();
+    passwordTextController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +84,6 @@ class _MyWidgetState extends State<LoginPage> {
 
               //login text field
               AppTextfield(
-                  width: 350,
                   controller: emailTextController,
                   hintText: "email",
                   obscureText: false),
@@ -77,7 +94,6 @@ class _MyWidgetState extends State<LoginPage> {
 
               //password textfield
               AppTextfield(
-                  width: 350,
                   controller: passwordTextController,
                   hintText: "password",
                   obscureText: true),
@@ -112,12 +128,13 @@ class _MyWidgetState extends State<LoginPage> {
               //button login
               AppButton(
                   onTap: () {
-                    print("Login button tapped!");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Homepage(),
-                        ));
+                    loginController.login(context);
+                    // print("Login button tapped!");
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => Homepage(),
+                    //     ));
                   },
                   text: 'Login'),
 

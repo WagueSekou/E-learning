@@ -1,5 +1,6 @@
-import 'package:elearning/Pages/Auth/reuseable/appBtn.dart';
-import 'package:elearning/Pages/Auth/reuseable/appTextfield.dart';
+import 'package:elearning/Pages/Auth/Registeration/controller/registrationController.dart';
+import 'package:elearning/Pages/reuseable/appBtn.dart';
+import 'package:elearning/Pages/reuseable/appTextfield.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -15,6 +16,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final userNameTextController = TextEditingController();
   final passwordTextController = TextEditingController();
   final confirmPasswordTexteController = TextEditingController();
+
+  //
+  late RegistrationController registrationController;
+  @override
+  void initState() {
+    super.initState();
+    registrationController = RegistrationController(
+      emailController: emailTextController,
+      userNameController: userNameTextController,
+      passwordController: passwordTextController,
+      confirmPasswordController: confirmPasswordTexteController,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +125,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
 
             //button login
-            AppButton(onTap: () {}, text: 'Login'),
+            AppButton(
+                onTap: () {
+                  registrationController.registerUser(context);
+                },
+                text: 'Login'),
 
             SizedBox(
               height: 15,

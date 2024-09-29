@@ -1,5 +1,5 @@
-import 'package:elearning/Pages/Auth/login.dart';
-import 'package:elearning/Pages/Auth/registrer.dart';
+import 'package:elearning/Pages/Auth/Login/login.dart';
+import 'package:elearning/Pages/Auth/Registeration/registrer.dart';
 import 'package:flutter/material.dart';
 
 class PageToggeler extends StatefulWidget {
