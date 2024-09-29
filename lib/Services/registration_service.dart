@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RegistrationService {
-  final String _registerUrl = 'https://your-laravel-api.com/api/register';
+  final String _registerUrl = 'http://192.168.43.138:8000/api/register';
 
   // Register user
   Future<Map<String, dynamic>> register(
