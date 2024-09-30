@@ -1,36 +1,76 @@
+import 'dart:convert';
+
 import 'package:elearning/Pages/Auth/Login/controller/loginController.dart';
+import 'package:elearning/Pages/Auth/Registeration/registrer.dart';
+import 'package:elearning/Pages/homePage.dart';
 import 'package:elearning/Pages/reuseable/appBtn.dart';
 import 'package:elearning/Pages/reuseable/appTextfield.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
-  final Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
+  //final Function()? onTap;
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailTextController = TextEditingController();
-  final passwordTextController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController(text: 'nick@gmail.com');
+  final TextEditingController _passwordController = TextEditingController(text: '1234');
+  bool _isLoading = false;
+
   //
-  late LoginController loginController;
-  @override
-  void initState() {
+  //late LoginController loginController;
+
+  /*void initState() {
     super.initState();
-    //initialize the logincontroller with textEditingControllers
+    //initialize the logincontroller with textEdi.tingControllers
     loginController = LoginController(
         emailController: emailTextController,
         passwordController: passwordTextController);
-  }
+  }*/
 
-  @override
+  Future<void> _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    var response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/api/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': _emailController.text,
+        'password': _passwordController.text,
+      }),
+    );
+
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty){
+      setState(() {
+        _isLoading = false;
+      });
+      print('empty fields');
+      return;
+    }
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      print('user login success');
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage(),));
+    }else{
+      print('login failed: ${response.body}');
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+  /*@override
   void dispose() {
     emailTextController.dispose();
     passwordTextController.dispose();
     super.dispose();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
 
               //login text field
               AppTextfield(
-                  controller: emailTextController,
+                  controller: _emailController,
                   hintText: "email",
                   obscureText: false),
 
@@ -94,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
 
               //password textfield
               AppTextfield(
-                  controller: passwordTextController,
+                  controller: _passwordController,
                   hintText: "password",
                   obscureText: true),
 
@@ -111,14 +151,14 @@ class _LoginPageState extends State<LoginPage> {
                     width: 10,
                   ),
                   GestureDetector(
-                      onTap: widget.onTap,
+                      onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> RegistrationPage()));},
                       child: Text(
-                        "Register Now",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ))
+                    "Register Now",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ))
                 ],
               ),
               SizedBox(
@@ -127,8 +167,8 @@ class _LoginPageState extends State<LoginPage> {
 
               //button login
               AppButton(
-                  onTap: () {
-                    loginController.login(context);
+                  onTap: () {_login();
+                    /*loginController.login(context);*/
                     // print("Login button tapped!");
                     // Navigator.push(
                     //     context,
@@ -137,6 +177,8 @@ class _LoginPageState extends State<LoginPage> {
                     //     ));
                   },
                   text: 'Login'),
+              ElevatedButton(onPressed:(){ _login(); },
+                child: _isLoading? CircularProgressIndicator(): Text('click me')),
 
               SizedBox(
                 height: 15,

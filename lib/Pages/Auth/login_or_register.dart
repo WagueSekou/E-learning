@@ -23,9 +23,9 @@ class _PageToggelerState extends State<PageToggeler> {
   @override
   Widget build(BuildContext context) {
     if (showLoginPage) {
-      return LoginPage(onTap: togglePages);
+      return LoginPage();
     } else {
-      return RegistrationPage(onTap: togglePages);
+      return RegistrationPage();
     }
   }
 }

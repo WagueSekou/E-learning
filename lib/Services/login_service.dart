@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class LoginService {
   // Replace with your actual Laravel API URL
-  final String _loginUrl = 'http://192.168.43.138:8000/api/login';
+  final String _loginUrl = 'http://10.0.2.2:8000/api/login';
   //192.168.43.138
 
   Future<Map<String, dynamic>?> login(String email, String password) async {

@@ -1,33 +1,59 @@
+import 'dart:convert';
+
+import 'package:elearning/Pages/Auth/Login/login.dart';
 import 'package:elearning/Pages/Auth/Registeration/controller/registrationController.dart';
 import 'package:elearning/Pages/reuseable/appBtn.dart';
 import 'package:elearning/Pages/reuseable/appTextfield.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class RegistrationPage extends StatefulWidget {
-  final Function()? onTap;
-  const RegistrationPage({super.key, required this.onTap});
+  //final Function()? onTap;
+  const RegistrationPage({super.key, /*required this.onTap*/});
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final emailTextController = TextEditingController();
-  final userNameTextController = TextEditingController();
-  final passwordTextController = TextEditingController();
-  final confirmPasswordTexteController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController(text: 'nickk');
+  final TextEditingController _emailController = TextEditingController(text: 'nickk@gmail.com');
+  final TextEditingController _userNameController = TextEditingController(text: 'nickk');
+  final TextEditingController _passwordController = TextEditingController(text: '123456789');
+  final TextEditingController _confirmPasswordController = TextEditingController(text: '123456789');
 
   //
-  late RegistrationController registrationController;
+ /* late RegistrationController registrationController;
   @override
   void initState() {
     super.initState();
     registrationController = RegistrationController(
-      emailController: emailTextController,
-      userNameController: userNameTextController,
-      passwordController: passwordTextController,
-      confirmPasswordController: confirmPasswordTexteController,
+      emailController: _emailController,
+      userNameController: _userNameController,
+      passwordController: _passwordController,
+      confirmPasswordController: _confirmPasswordController,
     );
+  }*/
+
+  Future<void> _register() async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8001/api/register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': _nameController.text,
+        'username':_userNameController.text,
+        'email': _emailController.text,
+        'password': _passwordController.text,
+      }),
+    );
+
+    if (response.statusCode == 201){
+      final responseData = jsonDecode(response.body);
+      print('User registered successfully: ${responseData['users']}');
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => const LoginPage(),));
+    }else{
+      print('Failed to register');
+    }
   }
 
   @override
@@ -62,7 +88,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
               //username textfield
               AppTextfield(
-                  controller: userNameTextController,
+                  controller: _userNameController,
                   hintText: "Username",
                   obscureText: false),
 
@@ -72,7 +98,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
               //login text field
               AppTextfield(
-                  controller: emailTextController,
+                  controller: _emailController,
                   hintText: "email",
                   obscureText: false),
 
@@ -82,7 +108,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
               //password textfield
               AppTextfield(
-                  controller: passwordTextController,
+                  controller: _passwordController,
                   hintText: "password",
                   obscureText: true),
               SizedBox(
@@ -91,7 +117,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
               //confirmpassword textfield
               AppTextfield(
-                  controller: confirmPasswordTexteController,
+                  controller: _confirmPasswordController,
                   hintText: "confirm password",
                   obscureText: false),
 
@@ -112,7 +138,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     width: 10,
                   ),
                   GestureDetector(
-                      onTap: widget.onTap,
+                      //onTap: widget.onTap,
                       child: Text(
                         "Login Now",
                         style: TextStyle(
@@ -129,9 +155,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
               //button login
               AppButton(
                   onTap: () {
-                    registrationController.registerUser(context);
+                    _register();
                   },
-                  text: 'Login'),
+                  text: 'Register'),
+              ElevatedButton(onPressed: (){_register();},
+                  child: Text('click')),
 
               SizedBox(
                 height: 15,
