@@ -1,7 +1,12 @@
 import 'package:elearning/Pages/Courses.dart';
 import 'package:flutter/material.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
   //creating static data in lists
   List catName = [
     "Category",
@@ -242,20 +247,6 @@ class Homepage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          showUnselectedLabels: true,
-          iconSize: 32,
-          selectedItemColor: Colors.purple[200],
-          selectedFontSize: 18,
-          unselectedItemColor: Colors.grey,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.assignment), label: 'Courses'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite), label: 'favorite'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
-          ]),
     );
   }
 }
